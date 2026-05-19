@@ -2,7 +2,7 @@
 #define MAIN_H
 
 #include "stm32l4xx_hal.h"
-#include "I2C.h"
+#include "eeprom.h"
 
 /* CubeMX-generated pin aliases for NUCLEO-L4A6ZG */
 #define B1_Pin                   GPIO_PIN_13
