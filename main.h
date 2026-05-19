@@ -1,26 +1,44 @@
-/* 1. Clocks */
-RCC->AHB2ENR  |=  RCC_AHB2ENR_GPIOBEN;     // GPIOB: SCL / SDA
-RCC->APB1ENR1 |=  RCC_APB1ENR1_I2C1EN;     // I2C1 bus clock
+#ifndef MAIN_H
+#define MAIN_H
 
-/* 2. MODER — PB8, PB9 → Alternate Function (0b10) */
-GPIOB->MODER &= ~(GPIO_MODER_MODE8 | GPIO_MODER_MODE9);
-GPIOB->MODER |=  (2u << GPIO_MODER_MODE8_Pos) |
-                 (2u << GPIO_MODER_MODE9_Pos);
+#include "stm32l4xx_hal.h"
+#include "I2C.h"
 
-/* 3. OTYPER — open-drain (required for I2C) */
-GPIOB->OTYPER |=  (GPIO_OTYPER_OT8 | GPIO_OTYPER_OT9);
+/* CubeMX-generated pin aliases for NUCLEO-L4A6ZG */
+#define B1_Pin                   GPIO_PIN_13
+#define B1_GPIO_Port             GPIOC
 
-/* 4. OSPEEDR — high speed */
-GPIOB->OSPEEDR &= ~(GPIO_OSPEEDR_OSPEED8 | GPIO_OSPEEDR_OSPEED9);
-GPIOB->OSPEEDR |=  (2u << GPIO_OSPEEDR_OSPEED8_Pos) |
-                   (2u << GPIO_OSPEEDR_OSPEED9_Pos);
+#define LD2_Pin                  GPIO_PIN_7
+#define LD3_Pin                  GPIO_PIN_14
+#define LD2_GPIO_Port            GPIOB
+#define LD3_GPIO_Port            GPIOB
 
-/* 5. PUPDR — no pull (external pull-ups on SCL/SDA to 3.3 V) */
-GPIOB->PUPDR &= ~(GPIO_PUPDR_PUPD8 | GPIO_PUPDR_PUPD9);
+#define USB_PowerSwitchOn_Pin    GPIO_PIN_6
+#define USB_PowerSwitchOn_GPIO_Port GPIOG
+#define USB_OverCurrent_Pin      GPIO_PIN_7
+#define USB_OverCurrent_GPIO_Port   GPIOG
 
-/* 6. AFR[1] — PB8, PB9 → AF4 (I2C1) */
-GPIOB->AFR[1] &= ~(0xFu << GPIO_AFRH_AFSEL8_Pos);
-GPIOB->AFR[1] |=  (0x4u << GPIO_AFRH_AFSEL8_Pos);
+#define USB_SOF_Pin              GPIO_PIN_8
+#define USB_VBUS_Pin             GPIO_PIN_9
+#define USB_ID_Pin               GPIO_PIN_10
+#define USB_DM_Pin               GPIO_PIN_11
+#define USB_DP_Pin               GPIO_PIN_12
+#define USB_SOF_GPIO_Port        GPIOA
+#define USB_VBUS_GPIO_Port       GPIOA
+#define USB_ID_GPIO_Port         GPIOA
+#define USB_DM_GPIO_Port         GPIOA
+#define USB_DP_GPIO_Port         GPIOA
 
-GPIOB->AFR[1] &= ~(0xFu << GPIO_AFRH_AFSEL9_Pos);
-GPIOB->AFR[1] |=  (0x4u << GPIO_AFRH_AFSEL9_Pos);
+#define STLK_RX_Pin              GPIO_PIN_8
+#define STLK_TX_Pin              GPIO_PIN_9
+#define STLK_RX_GPIO_Port        GPIOG
+#define STLK_TX_GPIO_Port        GPIOG
+
+/* EEPROM test values */
+#define TEST_ADDR   0x1A3C
+#define TEST_DATA   0xE7
+
+/* Error handler forward declaration */
+void Error_Handler(void);
+
+#endif /* MAIN_H */
