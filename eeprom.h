@@ -4,7 +4,7 @@
 #include "stm32l4xx_hal.h"
 #include <stdint.h>
 
-#define EEPROM_ADDRESS      0x50        // 7-bit base address (A2A1A0 = 000)
+#define EEPROM_ADDRESS      0x51        // 7-bit base address (A2A1A0 = 000)
 #define EEPROM_WRITE_DELAY  5           // ms — required after every write
 
 void    EEPROM_init(void);
