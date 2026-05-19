@@ -35,7 +35,7 @@
 #define STLK_TX_GPIO_Port        GPIOG
 
 /* EEPROM test values */
-#define TEST_ADDR   0x1A3C
+#define TEST_ADDR   0x51
 #define TEST_DATA   0xE7
 
 /* Error handler forward declaration */
