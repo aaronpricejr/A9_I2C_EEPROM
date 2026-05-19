@@ -18,8 +18,8 @@
  * GPIO Wiring
  * |   Component   | GPIO Identifier | Connector Location | Config
  *-----------------------------------------------------------------------------
- * | EEPROM - SCL  | PB6             | CN10-13            | AF4 OD
- * | EEPROM - SDA  | PB7             | CN10-15            | AF4 OD
+ * | EEPROM - SCL  | PB8             | CN10-13            | AF4 OD
+ * | EEPROM - SDA  | PB9             | CN10-15            | AF4 OD
  *******************************************************************************
  * Version History
  *  Ver.|   Date     | Description
@@ -59,17 +59,17 @@ void EEPROM_init(void)
 	GPIOB->PUPDR &= ~(GPIO_PUPDR_PUPD8 | GPIO_PUPDR_PUPD9);
 
 	/* 6. AFR[1] — PB8, PB9 → AF4 (I2C1) */
-	GPIOB->AFR[1] &= ~(0xFu << GPIO_AFRH_AFSEL8_Pos);
-	GPIOB->AFR[1] |=  (0x4u << GPIO_AFRH_AFSEL8_Pos);
+	GPIOB->AFR[4] &= ~(0xFu << GPIO_AFRH_AFSEL8_Pos);
+	GPIOB->AFR[4] |=  (0x4u << GPIO_AFRH_AFSEL8_Pos);
 
-	GPIOB->AFR[1] &= ~(0xFu << GPIO_AFRH_AFSEL9_Pos);
-	GPIOB->AFR[1] |=  (0x4u << GPIO_AFRH_AFSEL9_Pos);
+	GPIOB->AFR[4] &= ~(0xFu << GPIO_AFRH_AFSEL9_Pos);
+	GPIOB->AFR[4] |=  (0x4u << GPIO_AFRH_AFSEL9_Pos);
 
     /* 7. Configure I2C1 */
     I2C1->CR1    &= ~I2C_CR1_PE;               // disable I2C for config
     I2C1->CR1    &= ~I2C_CR1_ANFOFF;           // enable analog filter
     I2C1->CR1    &= ~I2C_CR1_DNF;              // disable digital filter
-    I2C1->TIMINGR = 0x00303D5B;                // 100 kHz @ 16 MHz SYSCLK (CubeMX)
+    I2C1->TIMINGR = 0x00100D14;    				  // 100 kHz @ 4 MHz SYSCLK
     I2C1->CR2    |=  I2C_CR2_AUTOEND;          // auto STOP after last byte
     I2C1->CR2    &= ~I2C_CR2_ADD10;            // 7-bit address mode
     I2C1->CR1    |=  I2C_CR1_PE;               // enable I2C
